@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React,{Component} from 'react';
 import Camera from 'react-native-camera';
 import {
   StyleSheet,
@@ -10,51 +10,41 @@ import {
   VibrationIOS,
 }	from 'react-native';
 
+export default class Scan extends Component{ 
 
-var Scan = React.createClass({
-
-  propTypes: {
-    cancelButtonVisible: React.PropTypes.bool,
-    cancelButtonTitle: React.PropTypes.string,
-    onSucess: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-  },
-
-  getDefaultProps: function() {
-    return {
-      cancelButtonVisible: false,
-      cancelButtonTitle: 'Cancel',
-    };
-  },
-
-  _onPressCancel: function() {
+  _onPressCancel() {
     var $this = this;
+
+		console.log('BarCode cancel pressed.  Flag: '+this.barCodeFlag);
+
     requestAnimationFrame(function() {
       $this.props.navigator.pop();
       if ($this.props.onCancel) {
         $this.props.onCancel();
       }
     });
-  },
+  }
 
-  _onBarCodeRead: function(result) {
+  _onBarCodeRead(result) {
     var $this = this;
+		console.log('BarCode detected flag: '+this.barCodeFlag);
 
-    if (this.barCodeFlag) {
-      this.barCodeFlag = false;
+  //  if (this.barCodeFlag) {
+			if(true){
+    //  this.barCodeFlag = false;
 
-      setTimeout(function() {
+      setTimeout(()=>{
         VibrationIOS.vibrate();
         $this.props.navigator.pop();
         $this.props.onSucess(result.data);
       }, 1000);
     }
-  },
+  }
 
-  render: function() {
+	render(){
     var cancelButton = null;
-    this.barCodeFlag = true;
-    
+//    this.barCodeFlag = true;
+
     if (this.props.cancelButtonVisible) {
       cancelButton = <CancelButton onPress={this._onPressCancel} title={this.props.cancelButtonTitle} />;
     }
@@ -67,8 +57,8 @@ var Scan = React.createClass({
         {cancelButton}
       </Camera>
     );
-  },
-});
+  }
+}
 
 var CancelButton = React.createClass({
   render: function() {
@@ -81,6 +71,19 @@ var CancelButton = React.createClass({
     );
   },
 });
+
+
+Scan.propTypes = {
+    cancelButtonVisible: React.PropTypes.bool,
+    cancelButtonTitle: React.PropTypes.string,
+    onSucess: React.PropTypes.func,
+    onCancel: React.PropTypes.func,
+}
+Scan.DefaultProps = {
+      cancelButtonVisible: false,
+      cancelButtonTitle: 'Cancel',
+}
+
 
 var styles = StyleSheet.create({
 
@@ -120,5 +123,4 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = Scan;
 
