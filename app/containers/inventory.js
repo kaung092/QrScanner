@@ -1,6 +1,6 @@
 import {
 	ListView,
-  AppRegistry,
+	AppRegistry,
 	View,
 	Text,
 	StyleSheet,
