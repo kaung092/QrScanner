@@ -2,6 +2,7 @@
 
 import React,{Component} from 'react';
 import Camera from 'react-native-camera';
+import {Actions} from 'react-native-router-flux';
 import {
   StyleSheet,
   View,
@@ -12,7 +13,7 @@ import {
 
 export default class Scan extends Component{ 
 
-  _onPressCancel() {
+   _onPressCancel = ()=> {
     var $this = this;
 
 		console.log('BarCode cancel pressed.  Flag: '+this.barCodeFlag);
@@ -25,25 +26,29 @@ export default class Scan extends Component{
     });
   }
 
-  _onBarCodeRead(result) {
+  _onBarCodeRead = (result)=> {
     var $this = this;
 		console.log('BarCode detected flag: '+this.barCodeFlag);
 
-  //  if (this.barCodeFlag) {
-			if(true){
-    //  this.barCodeFlag = false;
+    if(this.barCodeFlag == true) {
+      this.barCodeFlag = false;
+			console.log('Inside if loop.  flag: '+this.barCodeFlag);
 
       setTimeout(()=>{
         VibrationIOS.vibrate();
-        $this.props.navigator.pop();
-        $this.props.onSucess(result.data);
+				console.log("result data: "+result.data);
+				console.log("result type: "+result.type);
+//				Actions.inventory();
+				Actions.SaveImage({url:result.data});
+//        $this.props.navigator.pop();
+//        $this.props.onSucess(result.data);
       }, 1000);
     }
   }
 
 	render(){
     var cancelButton = null;
-//    this.barCodeFlag = true;
+    this.barCodeFlag = true;
 
     if (this.props.cancelButtonVisible) {
       cancelButton = <CancelButton onPress={this._onPressCancel} title={this.props.cancelButtonTitle} />;
