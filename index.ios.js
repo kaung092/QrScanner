@@ -16,8 +16,8 @@ class QrScanner extends Component {
 		return(
 			<Router>
 				<Scene key="root">
-					<Scene key="Inventory" component={Inventory} title="Inventory"/>
 					<Scene key="SaveImage" type="replace" component={SaveImage} title = "Save this Image"/>
+					<Scene key="Inventory" component={Inventory} title="Inventory"/>
 					<Scene key="Scan" component={Scan} title="Scan Code"/>
 				</Scene>
 			</Router>
