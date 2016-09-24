@@ -39,7 +39,7 @@ export default class SaveImage extends Component{
 			storedImages.push(newEntry);	
 		}
 		try {
-				AsyncStorage.setItem(SavedImagesKey, JSON.stringify(storedImages));
+			AsyncStorage.setItem(SavedImagesKey, JSON.stringify(storedImages));
 		} catch (error) {
 			console.log(error);
 		}
