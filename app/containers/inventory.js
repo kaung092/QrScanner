@@ -14,6 +14,7 @@ import ListRow from '../components/ListRow';
 var SavedImagesKey = '@AsyncStorage:SavedImageKey';  
 
 export default class inventory  extends Component {
+
 	async componentDidMount(){
 		try {
 			let value = await AsyncStorage.getItem(SavedImagesKey);
@@ -52,21 +53,24 @@ export default class inventory  extends Component {
 
 	render() {
 		return (
-			<View>
-			<ListView
-				style={styles.listview}
-				dataSource={this.state.dataSource}
-				renderRow={(rowData) => <ListRow RowData = {rowData} />}
-			/>
-			<Text>{this.state.selected}</Text>
-			<Button
-				style = {styles.Button}
-				onPress={
-					this._ScanNew
-				}
-			>
-				Scan Code
-			</Button>
+			<View style={styles.view}>
+
+				<Text>{this.state.selected}</Text>
+				<View style={styles.listViewWrapper}>
+					<ListView
+						style={styles.listview}
+						dataSource={this.state.dataSource}
+						renderRow={(rowData) => <ListRow RowData = {rowData} />}
+					/>
+				</View>
+				<Button
+					style = {styles.button}
+					onPress={
+						this._ScanNew
+					}
+				>
+					Scan Code
+				</Button>
 			</View>
 		);
 	}
@@ -76,24 +80,33 @@ export default class inventory  extends Component {
 
 
 const styles = StyleSheet.create({
+		view:{
+			flex:1,
+			flexDirection:'column',
+			justifyContent:'center',
+			padding:5
+		},
 		listview:{
-			marginTop:100	
 		},
 		text:{
 			color:'red',
 		},
-		Button:{
-			fontSize:15, 
-			justifyContent: 'center',
-			color:'white', 
+		button:{
+			alignSelf:'center',
+			marginTop:30,
+			padding:10,
+			borderRadius:10,
+			height: 40,
+			width: 200,
 			backgroundColor:'green',
-			padding:10, 
-			width:130,
-			alignSelf: 'center',
-			height:45, 
-			overflow:'hidden', 
-			borderRadius:4
+			color:'white'
+		},
+		listViewWrapper:{
+			height:400,
+			borderColor:'gray',	
+			borderRadius:10,
+			borderWidth:1,
+			padding:5
 		}
-
 	});
 

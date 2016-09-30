@@ -5,7 +5,6 @@ import{
 	Image
 } from 'react-native';
 import React, {Component} from 'react';
-import Button from 'react-native-button'; 
 
 export default class ListRow extends Component{
 	constructor(props){
@@ -13,23 +12,20 @@ export default class ListRow extends Component{
 	}
 	_popup= ()=>{
 		console.log(JSON.parse(this.props.RowData).url);	
-		
 	}
 
 	render(){
 		return(
-				<View>
-				<Button
-					onPress={
-						this._popup	
-					}
-				> 
-					{JSON.parse(this.props.RowData).ImageName}
-				</Button>	
-				<Image
-					style={{width: 50, height: 50}}
-					source={{	uri: JSON.parse(this.props.RowData).url}}
-				/>
+				<View style={styles.view}>
+					<Image
+						style={styles.image}
+						source={{	uri: JSON.parse(this.props.RowData).url}}
+					/>
+					<Text
+						style={styles.text}
+					> 
+						{JSON.parse(this.props.RowData).ImageName}
+					</Text>	
 				</View>
 		)	
 		
@@ -44,6 +40,20 @@ ListRow.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-	
-
+	view:{
+		marginTop:10,
+		flex:1,
+		flexDirection:'row',
+		borderRadius:5,
+		backgroundColor:'white',
+		paddingLeft:5
+	},
+	image:{
+		width:50,
+		height:50,
+		borderRadius:5
+	},
+	text:{
+		marginLeft:10
+	}
 });
