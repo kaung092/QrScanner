@@ -18,11 +18,16 @@ export default class SaveImage extends Component{
 	constructor(props){
 		super(props);	
 		this.state = {
-			ImageName: 'Enter Name',
+			ImageName: '',
+			warningTxt: ''
 		};	
 	}
 
 	 _SaveImage = ()=>{
+		if(this.state.ImageName == ''){
+			this.setState({warningTxt : "Name Cannot be Empty"});	
+			return;
+		}
 		let newEntry = { "ImageName":this.state.ImageName, "url": this.props.url};
 		let storedImages = this.storedImages;
 		console.log(storedImages);
@@ -39,31 +44,34 @@ export default class SaveImage extends Component{
 			storedImages.push(newEntry);	
 		}
 		try {
-				AsyncStorage.setItem(SavedImagesKey, JSON.stringify(storedImages));
+			AsyncStorage.setItem(SavedImagesKey, JSON.stringify(storedImages));
 		} catch (error) {
 			console.log(error);
 		}
 		Actions.Inventory();	
 	}
 
+
 	render(){
 		return(
 			<View
-				style={{flex:1}}
+				style={styles.view}
 			>
-
 				<Image
-					style =  {{width:100, height:100}}
+					style ={styles.image}
 					source = {{uri:this.props.url}}
 				/>
+				<Text style={{marginTop:10}}>Enter Name </Text>
 				<TextInput 
+					autoFocus
 					style = {styles.textbox}	
+					autoCorrect = {false}
 					onChangeText={(text)=> this.setState({ImageName:text})}
 					value = {this.state.ImageName}
 				/>
-				<Text>{this.props.url} </Text>  
+				<Text style={{color:'red'}}>{this.state.warningTxt}</Text>
 				<Button 
-					style= {{backgroundColor:'gray'}}
+					style= {styles.button}
 					onPress = {this._SaveImage}
 				>
 					Save This Image
@@ -96,9 +104,33 @@ SaveImage.defaultProps = {
 };
 
 var styles = StyleSheet.create({
+	view:{
+		flex:1,
+		flexDirection:'column',
+		alignItems:'center',
+		justifyContent:'center',
+		padding:5
+	},
+	image:{
+		width:200,
+		height:200
+	},
 	textbox:{
-		height: 100,
+		height: 30,
+		width:300,
+		alignSelf:'center',
+		paddingLeft:10,
+		borderRadius:5,
 		borderColor:'gray',
 		borderWidth: 2,
+	},
+	button:{
+		marginTop:30,
+		padding:10,
+		borderRadius:10,
+		height: 40,
+		width: 200,
+		backgroundColor:'green',
+		color:'white'
 	}
 });

@@ -15,9 +15,7 @@ export default class Scan extends Component{
 
    _onPressCancel = ()=> {
     var $this = this;
-
 		console.log('BarCode cancel pressed.  Flag: '+this.barCodeFlag);
-
     requestAnimationFrame(function() {
       $this.props.navigator.pop();
       if ($this.props.onCancel) {
@@ -27,21 +25,18 @@ export default class Scan extends Component{
   }
 
   _onBarCodeRead = (result)=> {
-    var $this = this;
+		var $this = this;
 		console.log('BarCode detected flag: '+this.barCodeFlag);
 
     if(this.barCodeFlag == true) {
-      this.barCodeFlag = false;
+			this.barCodeFlag = false;
 			console.log('Inside if loop.  flag: '+this.barCodeFlag);
 
       setTimeout(()=>{
         VibrationIOS.vibrate();
 				console.log("result data: "+result.data);
 				console.log("result type: "+result.type);
-//				Actions.inventory();
 				Actions.SaveImage({url:result.data});
-//        $this.props.navigator.pop();
-//        $this.props.onSucess(result.data);
       }, 1000);
     }
   }
