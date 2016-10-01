@@ -5,6 +5,7 @@ import {
 	View,
 	Text,
 	StyleSheet,
+	WebView
 } from 'react-native';
 import React,{Component} from 'react';
 import Button from 'react-native-button';
@@ -105,7 +106,6 @@ const styles = StyleSheet.create({
 			height:400,
 			borderColor:'gray',	
 			borderRadius:10,
-			borderWidth:1,
 			padding:5
 		}
 	});

@@ -10,15 +10,17 @@ import {Scene,Router} from 'react-native-router-flux';
 import Inventory from './app/containers/Inventory';
 import Scan from './app/containers/Scan';
 import SaveImage from './app/containers/SaveImage';
+import ViewImage from './app/containers/ViewImage';
 
 class QrScanner extends Component {
 	render(){
 		return(
 			<Router>
 				<Scene key="root">
-					<Scene key="Inventory" component={Inventory} title="Inventory"/>
 					<Scene key="SaveImage" type="replace" component={SaveImage} title = "Save this Image"/>
+					<Scene key="Inventory" component={Inventory} title="Inventory"/>
 					<Scene key="Scan" component={Scan} title="Scan Code"/>
+					<Scene key="ViewImage" component={ViewImage} />
 				</Scene>
 			</Router>
 		);	

@@ -6,7 +6,8 @@ import {
 	PickerIOS,
 	Text,
 	Image,
-	StyleSheet
+	StyleSheet,
+	WebView
 }
 from 'react-native';
 import Button from 'react-native-button';
@@ -18,6 +19,7 @@ export default class SaveImage extends Component{
 	constructor(props){
 		super(props);	
 		this.state = {
+			scalesPageToFit:false,
 			ImageName: '',
 			warningTxt: ''
 		};	
@@ -28,7 +30,11 @@ export default class SaveImage extends Component{
 			this.setState({warningTxt : "Name Cannot be Empty"});	
 			return;
 		}
-		let newEntry = { "ImageName":this.state.ImageName, "url": this.props.url};
+		let newEntry = { 
+			"ImageName":this.state.ImageName, 
+			"url": this.props.url,
+//			"thumbnail_path": this.props.thumbnail_path + this.state.ImageName + ".jpg"
+		};
 		let storedImages = this.storedImages;
 		console.log(storedImages);
 		let alreadyExist = false;
@@ -57,11 +63,16 @@ export default class SaveImage extends Component{
 			<View
 				style={styles.view}
 			>
-				<Image
-					style ={styles.image}
-					source = {{uri:this.props.url}}
-				/>
-				<Text style={{marginTop:10}}>Enter Name </Text>
+				<View style={styles.webViewWrapper}>
+					<WebView
+						ref="webview"
+						scalesPageToFit= {this.state.scalesPageToFit}
+						onLoad = {()=>{this.setState({scalesPageToFit:true})}}
+						startInLoadingState={true}
+						source ={{uri:this.props.url}}  
+					/>
+				</View>
+				<Text style={{marginTop:5}}>Enter Name </Text>
 				<TextInput 
 					autoFocus
 					style = {styles.textbox}	
@@ -100,7 +111,8 @@ SaveImage.propTypes = {
 
 SaveImage.defaultProps = {
 		url:'https://i.imgur.com/eoCTi.png',
-		storedImages:[]
+		storedImages:[],
+	//	thumbnail_path:'../resources/'
 };
 
 var styles = StyleSheet.create({
@@ -111,9 +123,9 @@ var styles = StyleSheet.create({
 		justifyContent:'center',
 		padding:5
 	},
-	image:{
-		width:200,
-		height:200
+	webViewWrapper:{
+		width:300,
+		height:350
 	},
 	textbox:{
 		height: 30,
@@ -125,7 +137,7 @@ var styles = StyleSheet.create({
 		borderWidth: 2,
 	},
 	button:{
-		marginTop:30,
+		marginTop:10,
 		padding:10,
 		borderRadius:10,
 		height: 40,
