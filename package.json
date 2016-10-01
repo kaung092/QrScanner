@@ -1,5 +1,5 @@
 {
-  "name": "QrScanner",
+  "name": "qrscanner",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,6 +13,20 @@
     "react-native-button": "^1.7.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-material-design": "^0.3.7",
-    "react-native-router-flux": "^3.35.0"
-  }
+    "react-native-router-flux": "^3.35.0",
+    "react-thumbnail": "^1.0.0"
+  },
+  "description": "Scan Any Qr Codes ",
+  "main": "index.android.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaung092/QrScanner.git"
+  },
+  "author": "kaung htet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaung092/QrScanner/issues"
+  },
+  "homepage": "https://github.com/kaung092/QrScanner#readme"
 }

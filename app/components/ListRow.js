@@ -1,10 +1,12 @@
 import{
 	View,
+	TouchableHighlight,
 	Text,
 	StyleSheet,
 	Image
 } from 'react-native';
 import React, {Component} from 'react';
+import {Actions} from 'react-native-router-flux';
 
 export default class ListRow extends Component{
 	constructor(props){
@@ -13,20 +15,25 @@ export default class ListRow extends Component{
 	_popup= ()=>{
 		console.log(JSON.parse(this.props.RowData).url);	
 	}
+	_ViewImage = ()=>{
+		Actions.ViewImage({
+			url:JSON.parse(this.props.RowData).url,
+			name:JSON.parse(this.props.RowData).ImageName
+		})
+	}
 
 	render(){
 		return(
-				<View style={styles.view}>
-					<Image
-						style={styles.image}
-						source={{	uri: JSON.parse(this.props.RowData).url}}
-					/>
+				<TouchableHighlight 
+					style={styles.view} 
+					onPress={this._ViewImage}
+				>
 					<Text
 						style={styles.text}
 					> 
 						{JSON.parse(this.props.RowData).ImageName}
 					</Text>	
-				</View>
+				</TouchableHighlight>
 		)	
 		
 	}
@@ -37,6 +44,7 @@ export default class ListRow extends Component{
 
 
 ListRow.defaultProps = {
+		
 };
 
 const styles = StyleSheet.create({
@@ -46,7 +54,9 @@ const styles = StyleSheet.create({
 		flexDirection:'row',
 		borderRadius:5,
 		backgroundColor:'white',
-		paddingLeft:5
+		borderBottomWidth:1,
+		borderColor:'gray',
+		padding:5
 	},
 	image:{
 		width:50,
